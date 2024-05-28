@@ -7,11 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JTextAreaEx01 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -43,16 +46,24 @@ public class JTextAreaEx01 extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btn = new JButton("New button");
+		btn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 덮어쓰기
+//				textArea.setText("hello text");
+				textArea.append("hello text\n");
+			}
+		});
 		btn.setBounds(12, 10, 560, 23);
 		contentPane.add(btn);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(12, 53, 560, 223);
+		scrollPane.setBounds(12, 53, 560, 414);
 		contentPane.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 	}
 }

@@ -16,7 +16,7 @@ public class JLabelEx01 extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */      
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -24,7 +24,7 @@ public class JLabelEx01 extends JFrame {
 					JLabelEx01 frame = new JLabelEx01();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace();   
 				}
 			}
 		});
@@ -43,27 +43,9 @@ public class JLabelEx01 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lbl1 = new JLabel("Hello World");
-		lbl1.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl1.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl1.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 14));
-		lbl1.setForeground(Color.RED);
-		lbl1.setBounds(12, 10, 560, 64);
-		
-		lbl1.setText("Hello World2");
-		
+		JLabel lbl1 = new JLabel("New label");
+		lbl1.setIcon(new ImageIcon(JLabelEx01.class.getResource("/images/button.jpeg")));
+		lbl1.setBounds(12, 10, 187, 80);
 		contentPane.add(lbl1);
-		
-		JLabel lbl2 = new JLabel("<html><body><font color='red'>Hello World1</font><br />Hello World2</body></html>");
-		lbl2.setBounds(12, 84, 560, 64);
-		contentPane.add(lbl2);
-		
-		JLabel lbl3 = new JLabel("New label");
-//		lbl3.setIcon(new ImageIcon("C:\\java\\java-workspace3\\SwingEx01\\button.PNG"));
-		lbl3.setIcon(new ImageIcon(JLabelEx01.class.getResource("/images/button.PNG")));
-	
-		
-		lbl3.setBounds(12, 145, 152, 56);
-		contentPane.add(lbl3);
 	}
 }
