@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+// DDD
+// 기능(메뉴) 당
+// table 당 
 public class ZipcodeDAO {
 	private Connection conn;
 	
@@ -26,6 +29,7 @@ public class ZipcodeDAO {
 		}
 	}
 	
+	// 기능 1 : 1
 	// select 
 	public ArrayList<ZipcodeTO> searchZipcode( String strDong ) {
 		PreparedStatement pstmt = null;
