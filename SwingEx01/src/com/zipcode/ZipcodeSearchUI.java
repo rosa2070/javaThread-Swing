@@ -21,6 +21,7 @@ public class ZipcodeSearchUI extends JFrame {
 	private JComboBox combo2;
 	private JComboBox combo3;
 	private JTextArea textArea;
+
 	/**
 	 * Launch the application.
 	 */
@@ -63,6 +64,10 @@ public class ZipcodeSearchUI extends JFrame {
 		combo1.addItemListener( new ItemListener() {
 			public void itemStateChanged( ItemEvent e ) {
 				if( e.getStateChange() == ItemEvent.SELECTED ) {
+					String selectedSido = (String) combo1.getSelectedItem();
+					combo2.setModel(new GugunComboBoxModel(selectedSido));
+					combo2.setSelectedIndex(0);
+
 				}
 			}
 		} );
@@ -70,7 +75,9 @@ public class ZipcodeSearchUI extends JFrame {
 		panel.add( combo1 );
           
 		combo2 = new JComboBox();
-		combo2.setModel(new DefaultComboBoxModel(new String[] {"구군"}));
+//		combo2.setModel(new DefaultComboBoxModel(new String[] {"구군"}));
+		
+		
 		combo2.addItemListener( new ItemListener() {
 			public void itemStateChanged( ItemEvent e ) {
 				if( e.getStateChange() == ItemEvent.SELECTED ) {

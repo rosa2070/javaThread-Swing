@@ -60,7 +60,33 @@ public class ZipcodeDAO {
 	
 	// 구군
 	public ArrayList<ZipcodeTO> listGugun( String sido ) {
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<ZipcodeTO> guguns = new ArrayList<ZipcodeTO>();
+		
+		try {
+			String sql = "select distinct gugun from zipcode where sido=?";
+			pstmt = this.conn.prepareStatement(sql);
+			pstmt.setString(1, sido);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ZipcodeTO to = new ZipcodeTO();
+				to.setGugun(rs.getString("gugun"));
+				guguns.add(to);
+			}
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println( "[에러] : " + e.getMessage() );
+		} finally {
+			if( rs != null ) try { rs.close(); } catch( SQLException e ) {}
+			if( pstmt != null ) try { pstmt.close(); } catch( SQLException e ) {}
+			if( conn != null ) try { conn.close(); } catch( SQLException e ) {}			
+		}
+		
+		return guguns;
 	}
 	
 	// 동
