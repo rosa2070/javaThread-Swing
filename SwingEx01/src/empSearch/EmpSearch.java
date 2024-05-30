@@ -1,3 +1,4 @@
+package empSearch;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 
@@ -75,7 +76,7 @@ public class EmpSearch extends JFrame {
 					textArea.setText("사원이름을 1자 이상 입력");
 				} else {
 					textArea.setText("");
-					
+					  
 					EmpDAO dao = new EmpDAO();
 					ArrayList<EmpTO> emps = dao.searchEmp(empName);
 					

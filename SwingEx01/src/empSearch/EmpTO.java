@@ -1,3 +1,4 @@
+package empSearch;
 
 public class EmpTO {
 //	select e.empno, e.ename, e.job, d.dname, d.loc from emp e inner join dept d on e.deptno = d.deptno;
