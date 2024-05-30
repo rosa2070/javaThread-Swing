@@ -48,6 +48,7 @@ public class EmployeeDAO {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.out.println("[에러] : " + e.getMessage());
 		} finally {
 			if( rs != null ) try { rs.close(); } catch( SQLException e ) {}
 			if( pstmt != null ) try { pstmt.close(); } catch( SQLException e ) {}

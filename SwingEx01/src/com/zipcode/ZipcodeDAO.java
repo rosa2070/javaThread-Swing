@@ -91,11 +91,71 @@ public class ZipcodeDAO {
 	
 	// 동
 	public ArrayList<ZipcodeTO> listDong( String sido, String gugun ) {
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<ZipcodeTO> dongs = new ArrayList<ZipcodeTO>();
+		
+		try {
+			String sql = "select distinct dong from zipcode where sido =? and gugun=?";
+			pstmt = this.conn.prepareStatement(sql);
+			pstmt.setString(1, sido);
+			pstmt.setString(2, gugun);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ZipcodeTO to = new ZipcodeTO();
+				to.setDong(rs.getString("dong"));
+				dongs.add(to);
+				
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println( "[에러] : " + e.getMessage() );
+		} finally {
+			if( rs != null ) try { rs.close(); } catch( SQLException e ) {}
+			if( pstmt != null ) try { pstmt.close(); } catch( SQLException e ) {}
+			if( conn != null ) try { conn.close(); } catch( SQLException e ) {}			
+		}
+		
+		return dongs;
 	}
 	
 	// 나머지
 	public ArrayList<ZipcodeTO> listAddress( String sido, String gugun, String dong ) {
-		return null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<ZipcodeTO> lists = new ArrayList<ZipcodeTO>();
+		
+		try {
+			String sql = "select zipcode, ri, bunji from zipcode where sido=? and gugun=? and dong=?;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sido);
+			pstmt.setString(2, gugun);
+			pstmt.setString(3, dong);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ZipcodeTO to = new ZipcodeTO();
+				to.setZipcode(rs.getString("zipcode"));
+				to.setRi(rs.getString("ri"));
+				to.setBunji(rs.getString("bunji"));
+				
+				lists.add(to);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println( "[에러] : " + e.getMessage() );
+		} finally {
+			if( rs != null ) try { rs.close(); } catch( SQLException e ) {}
+			if( pstmt != null ) try { pstmt.close(); } catch( SQLException e ) {}
+			if( conn != null ) try { conn.close(); } catch( SQLException e ) {}
+		}
+		
+		return lists;
 	}
 }

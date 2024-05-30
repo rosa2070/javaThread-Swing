@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,6 +22,9 @@ public class ZipcodeSearchUI extends JFrame {
 	private JComboBox combo2;
 	private JComboBox combo3;
 	private JTextArea textArea;
+	private String selectedSido;
+	private String selectedGugun;
+	private String selectedDong;
 
 	/**
 	 * Launch the application.
@@ -64,7 +68,7 @@ public class ZipcodeSearchUI extends JFrame {
 		combo1.addItemListener( new ItemListener() {
 			public void itemStateChanged( ItemEvent e ) {
 				if( e.getStateChange() == ItemEvent.SELECTED ) {
-					String selectedSido = (String) combo1.getSelectedItem();
+					selectedSido = (String) combo1.getSelectedItem();
 					combo2.setModel(new GugunComboBoxModel(selectedSido));
 					combo2.setSelectedIndex(0);
 
@@ -81,6 +85,9 @@ public class ZipcodeSearchUI extends JFrame {
 		combo2.addItemListener( new ItemListener() {
 			public void itemStateChanged( ItemEvent e ) {
 				if( e.getStateChange() == ItemEvent.SELECTED ) {
+					selectedGugun = (String) combo2.getSelectedItem();
+					combo3.setModel(new DongComboBoxModel(selectedSido, selectedGugun));
+					combo3.setSelectedIndex(0);
 				}
 			}
 		} );
@@ -88,10 +95,21 @@ public class ZipcodeSearchUI extends JFrame {
 		panel.add( combo2 );
           
 		combo3 = new JComboBox();
-		combo3.setModel(new DefaultComboBoxModel(new String[] {"동"}));
+//		combo3.setModel(new DefaultComboBoxModel(new String[] {"동"}));
+		
 		combo3.addItemListener( new ItemListener() {
 			public void itemStateChanged( ItemEvent e ) {
+				textArea.setText("");
 				if( e.getStateChange() == ItemEvent.SELECTED ) {
+					ZipcodeDAO dao = new ZipcodeDAO();
+					selectedDong = (String) combo3.getSelectedItem();
+					ArrayList<ZipcodeTO> datas = dao.listAddress(selectedSido, selectedGugun, selectedDong);
+					for(ZipcodeTO to : datas) {
+						String result = String.format("%s %s %s%n", 
+								to.getZipcode(), to.getRi(), to.getBunji());
+						textArea.append(result);
+					}	
+					
 				}
 			}
 		} );
