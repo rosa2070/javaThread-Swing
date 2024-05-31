@@ -1,4 +1,4 @@
-package com.dialog2;
+package com.zipcodewithdialog;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -8,15 +8,18 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class JDialogUI extends JDialog {
+public class ZicodeSearchDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField1;
-	private JTextField textField2;
+	private JTextField textField;
+	private JTable table;
 	
 	private String outputData;
 	
@@ -31,7 +34,7 @@ public class JDialogUI extends JDialog {
 	/*
 	public static void main(String[] args) {
 		try {
-			JDiialogUI dialog = new JDiialogUI();
+			ZicodeSearchDialog dialog = new ZicodeSearchDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -43,25 +46,47 @@ public class JDialogUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public JDialogUI() {
-		setResizable(false);
-		setBounds(100, 100, 450, 300);
+	public ZicodeSearchDialog() {
+		setBounds(100, 100, 450, 606);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			textField1 = new JTextField();
-			textField1.setBounds(12, 10, 410, 21);
-			contentPanel.add(textField1);
-			textField1.setColumns(10);
+			textField = new JTextField();
+			textField.setBounds(12, 10, 269, 21);
+			contentPanel.add(textField);
+			textField.setColumns(10);
 		}
 		{
-			textField2 = new JTextField();
-			textField2.setBounds(12, 44, 410, 21);
-			contentPanel.add(textField2);
-			textField2.setColumns(10);
+			JButton btn = new JButton("우편번호 검색");
+			btn.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					outputData = textField.getText();
+					String zipcode = new String(outputData);
+					table.setModel(new ZipcodeTableModel(zipcode));
+					
+				}
+			});
+			btn.setBounds(293, 9, 129, 23);
+			contentPanel.add(btn);
 		}
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 41, 410, 483);
+		contentPanel.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null},
+			},
+			new String[] {
+				"\uC6B0\uD3B8\uBC88\uD638", "\uC2DC\uB3C4", "\uAD6C\uAD70", "\uB3D9", "\uB9AC", "\uBC88\uC9C0"
+			}
+		));
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -71,10 +96,8 @@ public class JDialogUI extends JDialog {
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						String data = textField2.getText();
-						System.out.println(data);
-						JDialogUI.this.outputData = data; // ?뭔말
-						JDialogUI.this.dispose();
+						
+						ZicodeSearchDialog.this.dispose();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -86,8 +109,7 @@ public class JDialogUI extends JDialog {
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						JDialogUI.this.dispose();
-					
+						ZicodeSearchDialog.this.dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -95,11 +117,4 @@ public class JDialogUI extends JDialog {
 			}
 		}
 	}
-	
-	public JDialogUI(String data) {
-		this();
-//		System.out.println(data);
-		textField1.setText(data);
-	}
-
 }

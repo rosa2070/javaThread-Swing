@@ -62,6 +62,7 @@ public class DepartmentDAO {
 		return values;
 	}
 	
+	// 더 좋은 방법
 	public ArrayList<DepartmentTO> listDept2() {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
